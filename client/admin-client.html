@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Link Client</title>
+    <link rel="icon" href="get-icon" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="get-style" />
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=DotGothic16&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #ffffff;
+        }
+
+        .linksBlock {
+            background-color: #0f59a4;
+            border-radius: 1vw;
+            width: 24vw;
+            height: 15vh;
+            margin: 1vw;
+            margin-bottom: 5vh;
+            display: inline-block;
+            border: 2px solid white;
+            box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .linksBlock:hover {
+            height: 40vh;
+            box-shadow: rgba(0, 0, 0, 0.38) 0px 10px 20px, rgba(0, 0, 0, 0.46) 0px 6px 6px;
+            transition-duration: 0.2s;
+        }
+
+        .linksTitleArea {
+            display: flex;
+            text-align: center;
+        }
+
+        .linksTitle {
+            margin: auto;
+            padding-top: 2vh;
+            padding-bottom: 1vh;
+            font-size: 2em;
+            font-weight: bold;
+            border-radius: 1vw;
+            cursor: pointer;
+        }
+
+        .linksTitle:hover {
+            color: rgb(255, 255, 255);
+        }
+
+        .linksNote {
+            margin-top: 2vh;
+            font-size: 1.5em;
+            text-align: center;
+        }
+
+        #linksContainer {
+            text-align: center;
+            padding: 2vw;
+        }
+
+        section {
+            align-items: center;
+            text-align: center;
+            margin-top: 4vh;
+        }
+
+        button {
+            margin: 0.5em;
+            width: 8em;
+            height: 2em;
+            font-size: 1.5em;
+            letter-spacing: 0.1em;
+            background-color: #0f59a4;
+            border-radius: 0.5em;
+            border: 5px solid #ffffff;
+            color: rgb(0, 0, 0);
+        }
+
+        button:hover {
+            background-color: #ffffff;
+        }
+
+        p {
+            display: inline-block;
+        }
+    </style>
+    <script>
+        const handleResponse = (e) => {
+            console.log("e.target =", e.target);
+            console.log("e.target.response = ", e.target.response);
+            const obj = JSON.parse(e.target.response);
+            console.log("obj=", obj);
+            console.log(obj.links);
+
+            let linksContainer = document.querySelector("#linksContainer");
+            if (obj.links != null) {
+                linksContainer.innerHTML = "";
+                for (i in obj.links) {
+                    linksContainer.innerHTML +=
+                        `<div class="linksBlock">
+                        <figure style="
+                        background:${obj.links[i].color};
+                        border: 2px solid rgb(0, 0, 0);
+                        border-radius: 50%;
+                        width: 2vw;
+                        height: 2vw;
+                        margin:auto;
+                        margin-top:2vh;
+                        "></figure>
+                        <div class="linksTitleArea">
+                        <p class="linksTitle" onclick="window.open('${obj.links[i].link}')">
+                            <b><u>Http:// ${obj.links[i].name}</u></b>
+                        </p>
+                        </div>
+                        <p class="linksNote">${obj.links[i].note}</p>
+                        <p><button value="${obj.links[i].name}" onclick="callDeleteLink(value)">Delete</button></p>
+                     </div>
+                    `;
+                }
+            }
+        }
+
+        const init = () => {
+            load();
+        }
+
+        function load() {
+            let linksURL = "/get-links";
+            const xhr = new XMLHttpRequest();
+            xhr.onload = handleResponse;
+            xhr.open("GET", linksURL);
+            xhr.setRequestHeader('Accept', "application/javascript");
+            xhr.send();
+        }
+
+        function callDeleteLink(name) {
+            const xhr = new XMLHttpRequest();
+            xhr.open("POST", "/delete-link");
+            xhr.setRequestHeader('Accept', 'application/json');
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+            const formData =
+                `name=${name}`;
+            xhr.send(formData);
+            load();
+        }
+
+        window.onload = init;
+    </script>
+</head>
+
+<body>
+    <nav>
+        <a class="navLinks" href="/home-client">Home</a>
+        <br>
+        <a class="navLinks" href="/link-submit">Submit</a>
+        <br>
+        <a class="navLinks" href="/links-client">Links</a>
+        <br>
+        <a class="navLinks" href="/admin-client">Admin</a>
+    </nav>
+    <header>
+        <h1><u>Http:// Administrators</u></h1>
+    </header>
+    <div id="content">
+    </div>
+    <section>
+        <div id="linksContainer">
+
+        </div>
+    </section>
+</body>
+
+</html>
