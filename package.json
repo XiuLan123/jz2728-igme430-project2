@@ -6,14 +6,20 @@
     "npm": "6.14.x"
   },
   "description": "Project2 for IGME 430",
-  "main": "index.js",
+  "main": "./server/app.js",
   "scripts": {
-    "start": "node ./src/index.js",
-    "nodemon": "nodemon ./src/index.js -e js,html,css",
-    "pretest": "eslint ./src --fix",
-    "test": "echo \"ESLint Tests complete\""
+    "start": "node ./server/app.js",
+    "nodemon": "nodemon --watch ./server ./server/app.js",
+    "pretest": "eslint ./server --fix",
+    "test": "echo \"ESLint Tests complete\"",
+    "heroku-postbuild": "cd client && npm install && npm run build"
   },
-  "keywords": [],
+  "keywords": [    
+    "Node",
+    "MVC",
+    "Redis",
+    "Login"
+  ],
   "author": "John",
   "license": "ISC",
   "devDependencies": {

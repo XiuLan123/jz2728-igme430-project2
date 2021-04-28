@@ -18,7 +18,7 @@ const makeLink = (req, res) => {
     owner: req.session.account._id,
   };
 
-  const newLink = new Link.linkModel(linkData);
+  const newLink = new Link.LinkModel(linkData);
   const linkPromise = newLink.save();
 
   linkPromise.then(() => res.json({
