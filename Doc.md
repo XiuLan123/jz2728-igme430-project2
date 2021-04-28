@@ -9,3 +9,7 @@ express
 mongoose
 
 babel
+
+redis
+
+react
