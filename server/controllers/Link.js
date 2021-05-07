@@ -4,6 +4,22 @@ const {
   Link,
 } = models;
 
+const makerPage = (req, res) => {
+  Link.LinkModel.findByOwner(req.session.account._id, (err, docs) => {
+    if (err) {
+      console.log(err);
+      return res.status(400).json({
+        error: 'An error occurred',
+      });
+    }
+
+    return res.render('app', {
+      csrfToken: req.csrfToken(),
+      links: docs,
+    });
+  });
+};
+
 const makeLink = (req, res) => {
   if (!req.body.name || !req.body.url || !req.body.desc) {
     return res.status(400).json({
@@ -54,5 +70,6 @@ const getLinks = (request, response) => {
   });
 };
 
+module.exports.makerPage = makerPage;
 module.exports.getLinks = getLinks;
-module.exports.makeLink = makeLink;
+module.exports.make = makeLink;
