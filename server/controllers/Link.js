@@ -1,3 +1,4 @@
+const { request, response } = require('express');
 const models = require('../models');
 
 const {
@@ -70,6 +71,24 @@ const getLinks = (request, response) => {
   });
 };
 
+const deleteLink = (request, response) =>{
+  const req = request;
+  const res = response;
+
+  return Link.LinkModel.findAndDelete(req.session.account._id, (err, docs) => {
+    if (err) {
+      console.log(err);
+      return res.status(400).json({
+        error: 'An error occurred',
+      });
+    }
+    return res.json({
+      links: docs,
+    });
+  });
+};
+
 module.exports.makerPage = makerPage;
 module.exports.getLinks = getLinks;
 module.exports.make = makeLink;
+module.exports.deleteLink = deleteLink;

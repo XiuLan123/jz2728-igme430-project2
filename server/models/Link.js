@@ -45,7 +45,15 @@ LinkSchema.statics.findByOwner = (ownerId, callback) => {
     owner: convertId(ownerId),
   };
 
-  return LinkSchema.find(search).select('name url desc').lean().exec(callback);
+  return LinkModel.find(search).select('name url desc').lean().exec(callback);
+};
+
+LinkSchema.statics.findAndDelete = (ownerId, callback) => {
+  const search = {
+    owner: convertId(ownerId),
+  };
+
+  return LinkModel.deleteOne(search).exec(callback);
 };
 
 LinkModel = mongoose.model('Link', LinkSchema);

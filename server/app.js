@@ -14,7 +14,7 @@ const redis = require('redis');
 const router = require('./router.js');
 
 const app = express();
-const port = process.env.PORT || process.env.NODE_PORT || 3001;
+const port = process.env.PORT || process.env.NODE_PORT || 3000;
 
 const dbURL = 'mongodb+srv://JohnZhang:Qwe5179346@cluster0.dxkt3.mongodb.net/LinkNote';
 
@@ -49,8 +49,8 @@ const redisClient = redis.createClient({
   password: redisPASS,
 });
 
-app.use(express.static(path.join(__dirname, 'client/build')));
-app.use(favicon(`${__dirname}/../client/build/favicon.ico`));
+app.use('/assets', express.static(path.resolve(`${__dirname}/../hosted/`)));
+app.use(favicon(`${__dirname}/../hosted/img/favicon.ico`));
 app.disable('x-powered-by');
 app.use(cookieParser());
 app.use(compression());
@@ -63,7 +63,7 @@ app.use(session({
   store: new RedisStore({
     client: redisClient,
   }),
-  secret: 'Domo Arigato',
+  secret: 'Link Arigato',
   resave: true,
   saveUninitialized: true,
   cookie: {

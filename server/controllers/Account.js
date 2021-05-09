@@ -3,15 +3,22 @@ const models = require('../models');
 const {
   Account,
 } = models;
+
 const loginPage = (req, res) => {
   res.render('login', {
     csrfToken: req.csrfToken(),
   });
 };
+
+const errorPage = (req, res) => {
+  res.render('error');
+};
+
 const logout = (req, res) => {
   req.session.destroy();
   res.redirect('/');
 };
+
 const login = (request, response) => {
   const req = request;
   const res = response;
@@ -97,3 +104,4 @@ module.exports.login = login;
 module.exports.logout = logout;
 module.exports.signup = signup;
 module.exports.getToken = getToken;
+module.exports.errorPage = errorPage;
