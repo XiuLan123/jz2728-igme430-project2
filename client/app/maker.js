@@ -49,11 +49,21 @@ const LinkForm = (props) => {
       className="linkForm"
     >
       <label htmlFor="name">Name: </label>
-      <input id="linkName" type="text" name="name" placeholder="Link Name" />
+      <input
+        id="linkNameInput"
+        type="text"
+        name="name"
+        placeholder="Link Name"
+      />
       <label htmlFor="url">URL: </label>
-      <input mid="linkURL" type="text" name="url" placeholder="Link URL" />
-      <label htmlFor="url">Desc: </label>
-      <input mid="linkDesc" type="text" name="desc" placeholder="Link Desc" />
+      <input id="linkURLInput" type="text" name="url" placeholder="Link URL" />
+      <label htmlFor="desc">Desc: </label>
+      <input
+        id="linkDescInput"
+        type="text"
+        name="desc"
+        placeholder="Link Desc"
+      />
       <input type="hidden" name="_csrf" value={props.csrf} />
       <input className="makeLinkSubmit" type="submit" value="Make Link" />
     </form>
@@ -84,7 +94,9 @@ const LinkList = function (props) {
             {link.url}
           </a>{" "}
         </h3>
-        <h3 className="linkDesc"> Desc: {link.desc} </h3>
+        <h3 className="linkDesc">
+          <p>Desc: {link.desc}</p>
+        </h3>
         <form
           id="deleteForm"
           onSubmit={handleDelete}
@@ -113,6 +125,7 @@ const loadLinksFromServer = () => {
 };
 
 const setup = function (csrf) {
+
   ReactDOM.render(
     <LinkForm csrf={csrf} />,
     document.querySelector("#makeLink")

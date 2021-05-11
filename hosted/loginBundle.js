@@ -63,7 +63,7 @@ var LoginWindow = function LoginWindow(props) {
     name: "_csrf",
     value: props.csrf
   }), /*#__PURE__*/React.createElement("input", {
-    cIassName: "formSubmit",
+    className: "formSubmit",
     type: "submit",
     value: "Sign in"
   }));

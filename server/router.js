@@ -10,7 +10,7 @@ const router = (app) => {
   app.get('/logout', mid.requiresLogin, controllers.Account.logout);
   app.get('/maker', mid.requiresLogin, controllers.Link.makerPage);
   app.post('/maker', mid.requiresLogin, controllers.Link.make);
-  app.delete('/deleteLink',mid.requiresLogin, controllers.Link.deleteLink)
+  app.delete('/deleteLink', mid.requiresLogin, controllers.Link.deleteLink);
   app.get('/', mid.requiresSecure, mid.requiresLogout, controllers.Account.loginPage);
   app.get('*', controllers.Account.errorPage);
 };

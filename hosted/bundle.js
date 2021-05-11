@@ -38,21 +38,21 @@ var LinkForm = function LinkForm(props) {
   }, /*#__PURE__*/React.createElement("label", {
     htmlFor: "name"
   }, "Name: "), /*#__PURE__*/React.createElement("input", {
-    id: "linkName",
+    id: "linkNameInput",
     type: "text",
     name: "name",
     placeholder: "Link Name"
   }), /*#__PURE__*/React.createElement("label", {
     htmlFor: "url"
   }, "URL: "), /*#__PURE__*/React.createElement("input", {
-    mid: "linkURL",
+    id: "linkURLInput",
     type: "text",
     name: "url",
     placeholder: "Link URL"
   }), /*#__PURE__*/React.createElement("label", {
-    htmlFor: "url"
+    htmlFor: "desc"
   }, "Desc: "), /*#__PURE__*/React.createElement("input", {
-    mid: "linkDesc",
+    id: "linkDescInput",
     type: "text",
     name: "desc",
     placeholder: "Link Desc"
@@ -93,7 +93,7 @@ var LinkList = function LinkList(props) {
       target: "_blank"
     }, link.url), " "), /*#__PURE__*/React.createElement("h3", {
       className: "linkDesc"
-    }, " Desc: ", link.desc, " "), /*#__PURE__*/React.createElement("form", {
+    }, /*#__PURE__*/React.createElement("p", null, "Desc: ", link.desc)), /*#__PURE__*/React.createElement("form", {
       id: "deleteForm",
       onSubmit: handleDelete,
       name: "deleteForm",

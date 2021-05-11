@@ -1,5 +1,5 @@
-const crypto = require('crypto');
-const mongoose = require('mongoose');
+const crypto = require("crypto");
+const mongoose = require("mongoose");
 
 let AccountModel = {};
 const iterations = 10000;
@@ -37,12 +37,19 @@ AccountSchema.statics.toAPI = (doc) => ({
 const validatePassword = (doc, password, callback) => {
   const pass = doc.password;
 
-  return crypto.pbkdf2(password, doc.salt, iterations, keyLength, 'RSA-SHA512', (err, hash) => {
-    if (hash.toString('hex') !== pass) {
-      return callback(false);
+  return crypto.pbkdf2(
+    password,
+    doc.salt,
+    iterations,
+    keyLength,
+    "RSA-SHA512",
+    (err, hash) => {
+      if (hash.toString("hex") !== pass) {
+        return callback(false);
+      }
+      return callback(true);
     }
-    return callback(true);
-  });
+  );
 };
 
 AccountSchema.statics.findByUsername = (name, callback) => {
@@ -56,7 +63,14 @@ AccountSchema.statics.findByUsername = (name, callback) => {
 AccountSchema.statics.generateHash = (password, callback) => {
   const salt = crypto.randomBytes(saltLength);
 
-  crypto.pbkdf2(password, salt, iterations, keyLength, 'RSA-SHA512', (err, hash) => callback(salt, hash.toString('hex')));
+  crypto.pbkdf2(
+    password,
+    salt,
+    iterations,
+    keyLength,
+    "RSA-SHA512",
+    (err, hash) => callback(salt, hash.toString("hex"))
+  );
 };
 
 AccountSchema.statics.authenticate = (username, password, callback) => {
@@ -79,7 +93,7 @@ AccountSchema.statics.authenticate = (username, password, callback) => {
   });
 };
 
-AccountModel = mongoose.model('Account', AccountSchema);
+AccountModel = mongoose.model("Account", AccountSchema);
 
 module.exports.AccountModel = AccountModel;
 module.exports.AccountSchema = AccountSchema;
